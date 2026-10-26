@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © OOCS Commerce (https://www.oocscommerce.com). All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="OOCS_LynxMSI">
+        <sequence>
+            <!-- Model\Product\SalableStatus replaces the catalog's stock lookup. -->
+            <module name="OOCS_LynxCatalog"/>
+            <!--
+                The renderer pool this module registers into, and the shipping method step provider it plugs to
+                save the pickup location.
+            -->
+            <module name="OOCS_LynxCheckout"/>
+            <!--
+                MSI's in-store pickup owns the carrier, locations and address conversion; this module only puts a Lynx
+                front on them.
+            -->
+            <!-- InventoryIndexer is what makes AreProductsSalable one indexed query. -->
+            <module name="Magento_InventorySalesApi"/>
+            <module name="Magento_InventoryCatalog"/>
+            <module name="Magento_InventoryIndexer"/>
+            <module name="Magento_InventoryInStorePickupShippingApi"/>
+            <module name="Magento_InventoryInStorePickupQuote"/>
+        </sequence>
+    </module>
+</config>

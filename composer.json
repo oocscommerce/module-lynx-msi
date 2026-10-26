@@ -1,0 +1,24 @@
+{
+    "name": "oocscommerce/module-lynx-msi",
+    "description": "Lynx MSI module",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "php": ">=8.2",
+        "magento/framework": "*",
+        "oocscommerce/module-lynx-catalog": "^1.0",
+        "oocscommerce/module-lynx-checkout": "^1.0"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "OOCS\\LynxMSI\\": ""
+        }
+    }
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © OOCS Commerce (https://www.oocscommerce.com). All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--
+        The Lynx checkout renderer of the in-store pickup carrier (docs/store-pickup.md): under its rate, the stores
+        that can fulfil the cart. Carrier, rate and locations stay MSI's.
+    -->
+    <type name="OOCS\LynxCheckout\Provider\Checkout\Step\ShippingMethod">
+        <arguments>
+            <argument name="shippingMethodRenderers" xsi:type="array">
+                <item name="instore" xsi:type="array">
+                    <item name="component" xsi:type="string">OOCS_LynxMSI/Components/StorePickup</item>
+                    <item name="config" xsi:type="object">OOCS\LynxMSI\Model\PickupLocations</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <!--
+        Runs before the shipping method step saves the carrier, so a pickup order gets the store address and pickup
+        location code the way core's checkout writes them.
+    -->
+    <type name="OOCS\LynxCheckout\Provider\Checkout\Step\ShippingMethod">
+        <plugin name="oocs_lynx_msi_save_pickup_location"
+                type="OOCS\LynxMSI\Plugin\SavePickupLocation" sortOrder="10"/>
+    </type>
+    <!-- Card salability from the MSI stock of the current website instead of the legacy stock status index. -->
+    <preference for="OOCS\LynxCatalog\Model\Product\SalableStatus" type="OOCS\LynxMSI\Model\Product\SalableStatus"/>
+</config>
